@@ -59,10 +59,7 @@
   .mention-ville { margin-top: 18px; color: var(--doux); font-size: 14px; }
 
   /* ---------- Téléphone ---------- */
-  .telephone { position: relative; width: min(300px, 78vw); aspect-ratio: 1290 / 2796; border-radius: 46px; background: #05070F; padding: 10px; box-shadow: 0 0 0 2px #2a2f45, 0 40px 80px -30px rgba(0,0,0,.8), 0 0 90px -20px rgba(255,45,135,.35); margin: 0 auto; }
-  .telephone .ecran { position: relative; width: 100%; height: 100%; border-radius: 37px; overflow: hidden; background: var(--fond); }
-  .telephone .ile { position: absolute; top: 1.6%; left: 50%; transform: translateX(-50%); width: 31%; height: 3.4%; background: #000; border-radius: 999px; z-index: 3; }
-  .telephone img.capture { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; display: block; }
+  .telephone { display: block; width: min(300px, 78vw); height: auto; margin: 0 auto; filter: drop-shadow(0 30px 50px rgba(0,0,0,.6)) drop-shadow(0 0 60px rgba(255,45,135,.22)); }
   .heros .telephone { width: min(320px, 80vw); transform: rotate(3deg); }
 
   /* ---------- Sections ---------- */
@@ -170,7 +167,7 @@
         <p class="mention-ville">Gratuit · iPhone · Toulouse d'abord</p>
       </div>
       <div class="apparait">
-        <div class="telephone"><div class="ecran"><div class="ile"></div><img class="capture" src="img/accueil.jpg" alt="Écran d'accueil d'Ouzou : les bars autour de toi ce soir, avec le nombre de participants"></div></div>
+        <img class="telephone" src="img/tel-accueil.webp" alt="Écran d'accueil d'Ouzou : les bars autour de toi ce soir, avec le nombre de participants">
       </div>
     </div>
   </section>
@@ -196,8 +193,8 @@
           </ul>
         </div>
         <div class="duo">
-          <div class="telephone"><div class="ecran"><div class="ile"></div><img class="capture" src="img/accueil.jpg" alt="Liste des bars avec participants"></div></div>
-          <div class="telephone"><div class="ecran"><div class="ile"></div><img class="capture" src="img/fil.jpg" alt="Fil d'actualité d'un bar"></div></div>
+          <img class="telephone" src="img/tel-accueil.webp" alt="Liste des bars avec participants">
+          <img class="telephone" src="img/tel-fil.webp" alt="Fil d'actualité d'un bar">
         </div>
       </div>
 
@@ -213,8 +210,8 @@
           </ul>
         </div>
         <div class="duo">
-          <div class="telephone"><div class="ecran"><div class="ile"></div><img class="capture" src="img/recherche.jpg" alt="Une Recherche compagnie publiée dans le fil d'un bar"></div></div>
-          <div class="telephone"><div class="ecran"><div class="ile"></div><img class="capture" src="img/presence.jpg" alt="Confirmer sa présence sur place"></div></div>
+          <img class="telephone" src="img/tel-recherche.webp" alt="Une Recherche compagnie publiée dans le fil d'un bar">
+          <img class="telephone" src="img/tel-presence.webp" alt="Confirmer sa présence sur place">
         </div>
       </div>
 
@@ -231,8 +228,8 @@
           </ul>
         </div>
         <div class="duo">
-          <div class="telephone"><div class="ecran"><div class="ile"></div><img class="capture" src="img/presents.jpg" alt="Onglet Présents : les personnes sur place"></div></div>
-          <div class="telephone"><div class="ecran"><div class="ile"></div><img class="capture" src="img/reponse.jpg" alt="Conversation lancée via Présents"></div></div>
+          <img class="telephone" src="img/tel-presents.webp" alt="Onglet Présents : les personnes sur place">
+          <img class="telephone" src="img/tel-reponse.webp" alt="Conversation lancée via Présents">
         </div>
       </div>
     </div>
@@ -251,7 +248,7 @@
             <li>Les lieux animés ressortent avec leur nombre de participants</li>
           </ul>
         </div>
-        <div><div class="telephone"><div class="ecran"><div class="ile"></div><img class="capture" src="img/carte.jpg" alt="Carte des boîtes de Toulouse avec les participants"></div></div></div>
+        <div><img class="telephone" src="img/tel-carte.webp" alt="Carte des boîtes de Toulouse avec les participants"></div>
       </div>
     </div>
   </section>
@@ -265,7 +262,7 @@
         <p>Sortir, oui. Être harcelé, non. Ouzou est pensé pour que chacun se sente à l'aise.</p>
       </div>
       <div class="grille">
-        <div class="apparait"><div class="telephone"><div class="ecran"><div class="ile"></div><img class="capture" src="img/demande.jpg" alt="Demande de message avec les boutons Accepter et Refuser"></div></div></div>
+        <div class="apparait"><img class="telephone" src="img/tel-demande.webp" alt="Demande de message avec les boutons Accepter et Refuser"></div>
         <div class="cartes apparait">
           <div class="carte"><div class="icone">✉️</div><h3>Un seul message</h3><p>Une personne que tu ne connais pas ne peut t'envoyer qu'un message. Rien d'autre tant que tu n'as pas accepté.</p></div>
           <div class="carte"><div class="icone">✅</div><h3>Profils vérifiés</h3><p>Le badge orange : un selfie avec un geste, comparé à la main aux photos du profil.</p></div>
