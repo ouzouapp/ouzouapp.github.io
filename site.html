@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ouzou – Ne sors plus jamais seul à Toulouse</title>
+<meta name="description" content="Ouzou, l'appli des sorties à Toulouse : vois qui sort ce soir, trouve quelqu'un pour y aller et rencontre les gens sur place. Bientôt sur l'App Store.">
+<meta property="og:title" content="Ouzou – Ne sors plus jamais seul à Toulouse">
+<meta property="og:description" content="Vois qui sort ce soir, trouve quelqu'un pour y aller, rencontre les gens sur place. Bientôt sur iPhone.">
+<meta property="og:image" content="https://ouzouapp.fr/img/accueil.jpg">
+<meta property="og:url" content="https://ouzouapp.fr/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A0E1F">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fond: #0A0E1F; --carte: #121832; --bord: #232B4D;
+    --orange: #FF7A1A; --rose: #FF2D87; --vert: #1FB85A; --violet: #8B5CF6;
+    --texte: #FFFFFF; --doux: #9AA1BD;
+    --degrade: linear-gradient(90deg, var(--orange), var(--rose));
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--fond); color: var(--texte); font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  h1, h2, h3 { font-family: Poppins, Inter, sans-serif; line-height: 1.15; }
+  a { color: inherit; }
+  .conteneur { width: min(1120px, 100% - 32px); margin: 0 auto; }
+  .degrade-texte { background: var(--degrade); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* ---------- Bouton ---------- */
+  .bouton { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 999px; padding: 15px 26px; font: 600 16px Inter, sans-serif; color: #fff; background: var(--degrade); cursor: pointer; text-decoration: none; box-shadow: 0 10px 30px -10px rgba(255,45,135,.55); transition: transform .15s, box-shadow .15s; }
+  .bouton:hover { transform: translateY(-1px); box-shadow: 0 14px 34px -10px rgba(255,45,135,.7); }
+  .bouton.secondaire { background: transparent; border: 1.5px solid var(--bord); box-shadow: none; }
+
+  /* ---------- En-tête ---------- */
+  header.barre { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: rgba(10,14,31,.72); border-bottom: 1px solid rgba(35,43,77,.6); }
+  header.barre .conteneur { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  header.barre img { height: 34px; width: auto; display: block; }
+  header.barre .bouton { padding: 10px 18px; font-size: 14px; }
+
+  /* ---------- Héros ---------- */
+  .heros { position: relative; padding: 72px 0 40px; isolation: isolate; }
+  .heros::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url(img/fond.jpg) center 30% / cover no-repeat; opacity: .55; }
+  .heros::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10,14,31,.35) 0%, rgba(10,14,31,.75) 55%, var(--fond) 100%); }
+  .heros .conteneur { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
+  .pastille { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; background: rgba(255,122,26,.14); border: 1px solid rgba(255,122,26,.35); color: #FFB37A; font-size: 13px; font-weight: 600; margin-bottom: 22px; }
+  .pastille i { width: 8px; height: 8px; border-radius: 50%; background: var(--vert); box-shadow: 0 0 0 4px rgba(31,184,90,.2); font-style: normal; }
+  .heros h1 { font-size: clamp(38px, 6vw, 64px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 18px; }
+  .heros p.intro { font-size: clamp(17px, 2vw, 20px); color: #D5D9EA; max-width: 540px; margin-bottom: 30px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .badge-store { display: inline-flex; align-items: center; gap: 10px; padding: 9px 18px; border-radius: 12px; background: #000; border: 1px solid #3a3f55; color: #fff; text-decoration: none; }
+  .badge-store svg { width: 24px; height: 24px; fill: #fff; }
+  .badge-store small { display: block; font-size: 10px; color: #c9cbd6; line-height: 1.1; }
+  .badge-store b { display: block; font: 600 17px Inter, sans-serif; line-height: 1.15; }
+  .mention-ville { margin-top: 18px; color: var(--doux); font-size: 14px; }
+
+  /* ---------- Téléphone ---------- */
+  .telephone { display: block; width: min(300px, 78vw); height: auto; margin: 0 auto; filter: drop-shadow(0 30px 50px rgba(0,0,0,.6)) drop-shadow(0 0 60px rgba(255,45,135,.22)); }
+  .heros .telephone { width: min(320px, 80vw); transform: rotate(3deg); }
+
+  /* ---------- Sections ---------- */
+  section { padding: 90px 0; }
+  .titre-section { text-align: center; max-width: 680px; margin: 0 auto 56px; }
+  .titre-section .sur { color: var(--orange); font-weight: 600; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+  .titre-section h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -0.01em; margin-bottom: 14px; }
+  .titre-section p { color: var(--doux); font-size: 17px; }
+
+  .etape { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin-bottom: 96px; }
+  .etape:last-child { margin-bottom: 0; }
+  .etape.inverse .texte { order: 2; }
+  .etape .numero { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: var(--degrade); font: 800 20px Poppins, sans-serif; margin-bottom: 18px; }
+  .etape h3 { font-size: clamp(24px, 3vw, 32px); font-weight: 700; margin-bottom: 14px; }
+  .etape p { color: #C9CEE0; font-size: 17px; margin-bottom: 14px; }
+  .etape ul { list-style: none; display: grid; gap: 10px; margin-top: 18px; }
+  .etape li { display: flex; gap: 10px; color: #D5D9EA; }
+  .etape li::before { content: "✓"; color: var(--vert); font-weight: 700; }
+  .duo { display: flex; justify-content: center; gap: 18px; }
+  .duo .telephone { width: min(250px, 42vw); margin: 0; }
+  .duo .telephone:nth-child(2) { margin-top: 60px; }
+  .etiquette { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+  .etiquette.recherche { background: rgba(255,122,26,.14); color: #FFB37A; border: 1px solid rgba(255,122,26,.35); }
+  .etiquette.presents { background: rgba(255,45,135,.12); color: #FF8DBE; border: 1px solid rgba(255,45,135,.35); }
+
+  /* ---------- Sécurité ---------- */
+  .securite { background: linear-gradient(180deg, var(--fond), #0E1430 50%, var(--fond)); }
+  .securite .grille { display: grid; grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: center; }
+  .cartes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .carte { background: var(--carte); border: 1px solid var(--bord); border-radius: 20px; padding: 22px; }
+  .carte .icone { font-size: 26px; margin-bottom: 10px; }
+  .carte h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; font-family: Poppins, sans-serif; }
+  .carte p { color: var(--doux); font-size: 14.5px; }
+
+  /* ---------- Liste d'attente ---------- */
+  .attente .boite { position: relative; overflow: hidden; border-radius: 32px; padding: 56px 32px; text-align: center; background: radial-gradient(120% 140% at 50% 0%, rgba(255,45,135,.28), rgba(255,122,26,.12) 40%, var(--carte) 75%); border: 1px solid var(--bord); }
+  .attente h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; margin-bottom: 12px; }
+  .attente p.sous { color: #D5D9EA; font-size: 17px; max-width: 560px; margin: 0 auto 28px; }
+  form.liste { display: flex; gap: 10px; max-width: 520px; margin: 0 auto; }
+  form.liste input[type=email] { flex: 1; min-width: 0; border-radius: 999px; border: 1.5px solid var(--bord); background: rgba(10,14,31,.75); color: #fff; padding: 15px 22px; font: 16px Inter, sans-serif; outline: none; }
+  form.liste input[type=email]:focus { border-color: var(--orange); }
+  .piege { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .consentement { color: var(--doux); font-size: 13px; max-width: 520px; margin: 16px auto 0; }
+  .consentement a { color: #C9CEE0; }
+  .message-form { margin-top: 18px; font-weight: 600; min-height: 1.5em; }
+  .message-form.ok { color: #3BE07A; }
+  .message-form.erreur { color: #FF7A8A; }
+  .reseaux { display: flex; justify-content: center; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+
+  /* ---------- Pied de page ---------- */
+  footer { border-top: 1px solid var(--bord); padding: 40px 0 50px; color: var(--doux); font-size: 14px; }
+  footer .conteneur { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center; }
+  footer img { height: 28px; width: auto; }
+  footer nav { display: flex; flex-wrap: wrap; gap: 18px; }
+  footer nav a { text-decoration: none; }
+  footer nav a:hover { color: #fff; }
+  footer .petit { width: 100%; font-size: 12.5px; color: #6E7595; }
+
+  /* ---------- Apparition au défilement ---------- */
+  .apparait { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .apparait.visible { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .apparait { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 860px) {
+    .heros { padding-top: 40px; }
+    .heros .conteneur, .etape, .securite .grille { grid-template-columns: 1fr; gap: 36px; }
+    .heros .texte { text-align: center; }
+    .heros p.intro { margin-left: auto; margin-right: auto; }
+    .actions { justify-content: center; }
+    .etape.inverse .texte { order: 0; }
+    .etape { margin-bottom: 72px; }
+    section { padding: 64px 0; }
+    .cartes { grid-template-columns: 1fr; }
+    form.liste { flex-direction: column; }
+    .duo .telephone { width: min(200px, 44vw); }
+    .duo .telephone:nth-child(2) { margin-top: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="barre">
+  <div class="conteneur">
+    <a href="#" aria-label="Ouzou, accueil"><img src="img/logo.png" alt="Ouzou"></a>
+    <a class="bouton" href="#liste">Être prévenu</a>
+  </div>
+</header>
+
+<main>
+  <!-- ===== Héros ===== -->
+  <section class="heros">
+    <div class="conteneur">
+      <div class="texte">
+        <span class="pastille"><i></i> Bientôt à Toulouse</span>
+        <h1>Ne sors plus <span class="degrade-texte">jamais seul</span> à Toulouse.</h1>
+        <p class="intro">Vois qui sort ce soir, trouve quelqu'un pour y aller et rencontre les gens déjà sur place. Tous les bars et boîtes de Toulouse, dans une seule appli.</p>
+        <div class="actions">
+          <a class="bouton" href="#liste">Être prévenu du lancement</a>
+          <span class="badge-store" aria-label="Bientôt sur l'App Store">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.86-.76-1.47.02-2.83.86-3.59 2.17-1.54 2.66-.39 6.6 1.1 8.76.73 1.06 1.6 2.24 2.73 2.2 1.1-.05 1.51-.71 2.84-.71 1.32 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.13.84-1.22 1.18-2.41 1.2-2.47-.03-.01-2.29-.88-2.3-3.51zM14.2 6.13c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.64-1.05 1.68-.92 2.67.97.07 1.96-.49 2.56-1.22z"/></svg>
+            <span><small>Bientôt sur</small><b>l'App Store</b></span>
+          </span>
+        </div>
+        <p class="mention-ville">Gratuit · iPhone · Toulouse d'abord</p>
+      </div>
+      <div class="apparait">
+        <img class="telephone" src="img/tel-accueil.webp" alt="Écran d'accueil d'Ouzou : les bars autour de toi ce soir, avec le nombre de participants">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Comment ça marche ===== -->
+  <section id="comment">
+    <div class="conteneur">
+      <div class="titre-section apparait">
+        <p class="sur">Comment ça marche</p>
+        <h2>Ta soirée, en <span class="degrade-texte">3 étapes</span></h2>
+        <p>Pas besoin d'avoir une bande d'amis dispo pour sortir. Ouzou te connecte aux gens qui sortent au même endroit que toi, ce soir.</p>
+      </div>
+
+      <div class="etape apparait">
+        <div class="texte">
+          <span class="numero">1</span>
+          <h3>Choisis où tu sors</h3>
+          <p>Tous les bars et boîtes de Toulouse, avec leurs horaires, leur distance… et surtout le nombre de personnes qui y vont ce soir.</p>
+          <ul>
+            <li>Les lieux où il y a du monde remontent en premier</li>
+            <li>Appuie sur « Je participe » pour dire que tu y vas</li>
+            <li>Le fil du lieu : l'ambiance racontée par ceux qui y sont</li>
+          </ul>
+        </div>
+        <div class="duo">
+          <img class="telephone" src="img/tel-accueil.webp" alt="Liste des bars avec participants">
+          <img class="telephone" src="img/tel-fil.webp" alt="Fil d'actualité d'un bar">
+        </div>
+      </div>
+
+      <div class="etape inverse apparait">
+        <div class="texte">
+          <span class="numero">2</span>
+          <span class="etiquette recherche">🤝 Recherche compagnie</span>
+          <h3>Trouve quelqu'un pour y aller</h3>
+          <p>Tu n'as personne pour sortir ce soir ? Publie une Recherche compagnie dans le fil du bar. Quelqu'un qui y va aussi te répond en privé, et vous y allez ensemble.</p>
+          <ul>
+            <li>Idéal si tu viens d'arriver à Toulouse</li>
+            <li>La recherche disparaît d'elle-même le lendemain matin</li>
+          </ul>
+        </div>
+        <div class="duo">
+          <img class="telephone" src="img/tel-recherche-message.webp" alt="Message privé envoyé en réponse à une Recherche compagnie">
+          <img class="telephone" src="img/tel-recherche-reponse.webp" alt="La réponse : rendez-vous pris pour aller au bar ensemble">
+        </div>
+      </div>
+
+      <div class="etape apparait">
+        <div class="texte">
+          <span class="numero">3</span>
+          <span class="etiquette presents">📍 Présents</span>
+          <h3>Rencontre les gens sur place</h3>
+          <p>Une fois au bar, confirme ta présence : tu vois qui est vraiment là, en ce moment. Envie de parler à quelqu'un sans débarquer à sa table ? Envoie-lui un message d'abord.</p>
+          <ul>
+            <li>Présence vérifiée par la position de ton téléphone</li>
+            <li>Ta position exacte n'est jamais montrée aux autres</li>
+            <li>Tu disparais des Présents dès que tu pars</li>
+          </ul>
+        </div>
+        <div class="duo">
+          <img class="telephone" src="img/tel-presents.webp" alt="Onglet Présents : les personnes sur place">
+          <img class="telephone" src="img/tel-reponse.webp" alt="Conversation lancée via Présents">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== La suite de la soirée ===== -->
+  <section>
+    <div class="conteneur">
+      <div class="etape inverse apparait">
+        <div class="texte">
+          <span class="numero">🪩</span>
+          <h3>Et après le bar ?</h3>
+          <p>Ouvre la carte, passe en mode Boîtes et regarde où il y a du monde autour de toi. Tu vois combien de personnes y vont, et tu choisis la suite de ta soirée.</p>
+          <ul>
+            <li>Bars et boîtes sur une seule carte</li>
+            <li>Les lieux animés ressortent avec leur nombre de participants</li>
+          </ul>
+        </div>
+        <div><img class="telephone" src="img/tel-carte.webp" alt="Carte des boîtes de Toulouse avec les participants"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Sécurité ===== -->
+  <section class="securite">
+    <div class="conteneur">
+      <div class="titre-section apparait">
+        <p class="sur">Sécurité &amp; respect</p>
+        <h2>Tu choisis <span class="degrade-texte">qui peut t'écrire</span></h2>
+        <p>Sortir, oui. Être harcelé, non. Ouzou est pensé pour que chacun se sente à l'aise.</p>
+      </div>
+      <div class="grille">
+        <div class="apparait"><img class="telephone" src="img/tel-demande.webp" alt="Demande de message avec les boutons Accepter et Refuser"></div>
+        <div class="cartes apparait">
+          <div class="carte"><div class="icone">✉️</div><h3>Un seul message</h3><p>Une personne que tu ne connais pas ne peut t'envoyer qu'un message. Rien d'autre tant que tu n'as pas accepté.</p></div>
+          <div class="carte"><div class="icone">✅</div><h3>Profils vérifiés</h3><p>Le badge orange : un selfie avec un geste, comparé à la main aux photos du profil.</p></div>
+          <div class="carte"><div class="icone">📍</div><h3>Position protégée</h3><p>Ta position sert seulement à confirmer que tu es sur place. Elle n'est jamais partagée.</p></div>
+          <div class="carte"><div class="icone">🛡️</div><h3>Signaler &amp; bloquer</h3><p>En un geste. Chaque signalement est examiné, avec un engagement de réponse sous 24 h.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Liste d'attente ===== -->
+  <section class="attente" id="liste">
+    <div class="conteneur">
+      <div class="boite apparait">
+        <h2>Sois là <span class="degrade-texte">dès le lancement</span></h2>
+        <p class="sous">Ouzou arrive bientôt sur iPhone, à Toulouse. Laisse ton email : on te prévient le jour où l'appli est disponible.</p>
+        <form class="liste" id="formListe" novalidate>
+          <input type="email" name="email" id="email" placeholder="ton@email.fr" autocomplete="email" required aria-label="Ton adresse email">
+          <input class="piege" type="text" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="bouton" type="submit" id="boutonListe">Me prévenir</button>
+        </form>
+        <p class="message-form" id="messageListe" role="status" aria-live="polite"></p>
+        <p class="consentement">Ton email sert uniquement à te prévenir du lancement d'Ouzou. Jamais revendu, désinscription en un clic dans chaque email. <a href="politique-confidentialite.html">Politique de confidentialité</a>.</p>
+        <div class="reseaux">
+          <a class="bouton secondaire" href="https://www.instagram.com/ouzouapp/" target="_blank" rel="noopener">Instagram @ouzouapp</a>
+          <a class="bouton secondaire" href="https://www.tiktok.com/@ouzouapp" target="_blank" rel="noopener">TikTok @ouzouapp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="conteneur">
+    <img src="img/logo.png" alt="Ouzou">
+    <nav>
+      <a href="cgu.html">Conditions d'utilisation</a>
+      <a href="politique-confidentialite.html">Confidentialité</a>
+      <a href="mentions-legales.html">Mentions légales</a>
+      <a href="mailto:ouzou.app@gmail.com">ouzou.app@gmail.com</a>
+    </nav>
+    <p class="petit">© 2026 Ouzou · Toulouse. Les photos de lieux dans l'appli sont des illustrations, pas des photos des établissements. Ouzou est réservé aux 18 ans et plus.</p>
+  </div>
+</footer>
+
+<script>
+  // Apparition douce des blocs au défilement
+  (function () {
+    var blocs = document.querySelectorAll('.apparait');
+    if (!('IntersectionObserver' in window)) { blocs.forEach(function (b) { b.classList.add('visible'); }); return; }
+    var obs = new IntersectionObserver(function (entrees) {
+      entrees.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    blocs.forEach(function (b) { obs.observe(b); });
+  })();
+
+  // Liste d'attente : envoi vers le script Google de ouzou.app@gmail.com (emails rangés dans une Google Sheet)
+  (function () {
+    var URL_LISTE = 'https://script.google.com/macros/s/AKfycbwz2cnFn5jhN-EILXmSfHVNxNhPSCaKeCrFsRrYIz8a82b6POc8UR2_CFQw-Lp5TASw/exec';
+    var form = document.getElementById('formListe');
+    var champ = document.getElementById('email');
+    var bouton = document.getElementById('boutonListe');
+    var msg = document.getElementById('messageListe');
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var email = champ.value.trim();
+      msg.className = 'message-form';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+        msg.textContent = "Cette adresse email n'a pas l'air valide.";
+        msg.classList.add('erreur');
+        champ.focus();
+        return;
+      }
+      bouton.disabled = true;
+      bouton.textContent = 'Envoi…';
+      var donnees = new URLSearchParams({ email: email, site: form.site.value, source: 'site' });
+      fetch(URL_LISTE, { method: 'POST', mode: 'no-cors', body: donnees })
+        .then(function () {
+          msg.textContent = "C'est noté ! Regarde ta boîte mail, on t'a envoyé une confirmation 🍹";
+          msg.classList.add('ok');
+          form.reset();
+        })
+        .catch(function () {
+          msg.textContent = "Oups, ça n'est pas passé. Vérifie ta connexion et réessaie.";
+          msg.classList.add('erreur');
+        })
+        .finally(function () {
+          bouton.disabled = false;
+          bouton.textContent = 'Me prévenir';
+        });
+    });
+  })();
+</script>
+</body>
+</html>
